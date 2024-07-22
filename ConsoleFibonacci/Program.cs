@@ -1,11 +1,31 @@
 ﻿namespace ConsoleFibonacci {
     internal class Program {
         static void Main(string[] args) {
-            Console.BackgroundColor = ConsoleColor.Blue;
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Clear();
-            Console.WriteLine("ConsoleFibunacci \n");
+            
+            bool appRunning = true;
 
+            while (appRunning) {
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Clear();
+                Console.WriteLine("ConsoleFibunacci \n");
+
+                int count = GetFibonacciCountFromInput();
+                ShowFibonacciNumbers(count);
+
+                Console.Write("\n\nProgramm beenden (e)? ");
+                try {
+                    string exitApp = Console.ReadLine();
+                    if (exitApp.ToUpper() == "E") {
+                        appRunning = false;
+                    }
+                } catch {
+                    // no error message, just keep going and repeat the app
+                }
+            }
+        }
+
+        private static int GetFibonacciCountFromInput() {
             Console.Write("Wieviele Fibonacci-Zahlen sollen berechnet werden? ");
             int count = 0;
             while (count < 1) {
@@ -19,10 +39,7 @@
                 }
             }
 
-            ShowFibonacciNumbers(count);
-
-            Console.WriteLine("\n\nProgramm beenden (e)?");
-            Console.ReadLine();
+            return count;
         }
 
         private static void ShowErrorInputMessage() {
@@ -39,6 +56,7 @@
 
 
             for (int i = 0; i < count; i++) {
+                // exceptions for the first two numbers which are preset in x and y, then begin calculations (x + y)
                 switch (i) {
                     case 0:
                         Console.Write("\n" + x + ", ");
@@ -49,13 +67,11 @@
                     default:
                         newResult = x + y;
 
-                        // break line if window width would be reached by next number
+                        // insert a line break if window width would be reached by next number
                         if (Console.GetCursorPosition().Left + newResult.ToString("N0").Length + 2 >= Console.WindowWidth) {
                             Console.Write("\n");
                         }
-                        //newResult.ToString().Length;
-                        //Console.GetCursorPosition().Left;
-
+                        
                         Console.Write(newResult.ToString("N0") + ", ");
 
                         x = y;
