@@ -50,9 +50,9 @@
         }
 
         private static void ShowFibonacciNumbers(int count) {
-            long x = 0;
-            long y = 1;
-            long newResult = 0;
+            ulong x = 0;
+            ulong y = 1;
+            ulong newResult = 0;
 
 
             for (int i = 0; i < count; i++) {
