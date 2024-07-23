@@ -65,7 +65,7 @@
                         Console.Write(y + ", ");
                         break;
                     default:
-                        newResult = x + y;
+                        newResult = x + y; 
 
                         // insert a line break if window width would be reached by next number
                         if (Console.GetCursorPosition().Left + newResult.ToString("N0").Length + 2 >= Console.WindowWidth) {
