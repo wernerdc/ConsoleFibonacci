@@ -1,7 +1,17 @@
 ﻿namespace ConsoleFibonacci {
+    
     internal class Program {
+
+        public static string[,] dataTypes = { 
+            { "byte",    "8 Bit" },
+            { "ushort", "16 Bit" }, 
+            { "uint",   "32 Bit" },
+            { "ulong",  "64 Bit" }, 
+            { "string",  "x Bit" } 
+        };
+
         static void Main(string[] args) {
-            
+
             bool appRunning = true;
 
             while (appRunning) {
@@ -10,6 +20,7 @@
                 Console.Clear();
                 Console.WriteLine("ConsoleFibunacci \n");
 
+                int type = GetDataTypeFromInput();
                 // get input from console + convert to int. handle any exeptions.
                 int count = GetFibonacciCountFromInput();
 
@@ -28,6 +39,32 @@
                     // no error message, just keep going and repeat the app
                 }
             }
+        }
+
+        private static int GetDataTypeFromInput() {
+
+            for (int i = 0; i < dataTypes.GetLength(0); i++) {
+                Console.WriteLine("{0} = {1,-7} {2,6}", i, dataTypes[i, 0], dataTypes[i, 1]);
+            }
+            Console.Write("Welcher Datentyp soll verwendet werden? ");
+
+            int typeIndex = -1;
+            while (typeIndex < 0) {
+                try {
+                    // try to convert string from console to integer 
+                    typeIndex = Convert.ToInt32(Console.ReadLine());
+                    if (typeIndex < 0 || typeIndex >= dataTypes.GetLength(0)) {
+                        typeIndex = -1;
+                        ShowErrorTypeMessage();
+                    }
+                } catch {
+                    // catch errors so the app doesn't crash if one ocours
+                    // then show an error message
+                    ShowErrorTypeMessage();
+                }
+            }
+
+            return typeIndex;
         }
 
         private static int GetFibonacciCountFromInput() {
@@ -50,6 +87,12 @@
             return count;
         }
 
+        private static void ShowErrorTypeMessage() {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("\nUngültige Eingabe: Nur positive Ganzzahlen von 0 bis {0} sind erlaubt\n", dataTypes.GetLength(0) -1);
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+        
         private static void ShowErrorInputMessage() {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("\nUngültige Eingabe: Nur positive Ganzzahlen > 0 sind erlaubt\n");
